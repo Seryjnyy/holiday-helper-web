@@ -1,12 +1,24 @@
 import { supabase } from "../supabase/supabaseClient";
 
 export const getGroupsForUser = async (userID: string) => {
-  const { error, data } = await supabase.from("group").select();
+  console.log("🚀 ~ getGroupsForUser ~ userID:", userID);
+  const { error, data } = await supabase
+    .from("group_user")
+    .select("group(*)")
+    .eq("user_id", userID);
 
-  return;
+  if (error) {
+    return { error: error.message, data: null };
+  }
+  if (!data) {
+    return { error: null, data: null };
+  }
+
+  // return {error:null, data:data.filter(group => group.group != null)};
+  return { error: null, data: data };
 };
 
-export const getGroupsForUser = async (userID: string) => {
+export const getGroupsForUsesr = async (userID: string) => {
   const { error, data } = await supabase.from("group").select();
   if (error) {
     return { data: null, error: error.message };

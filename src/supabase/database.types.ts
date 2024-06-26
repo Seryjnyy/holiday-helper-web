@@ -41,20 +41,41 @@ export type Database = {
           },
         ]
       }
-      something: {
+      group_user: {
         Row: {
           created_at: string
-          id: number
+          group_id: string
+          id: string
+          user_id: string
         }
         Insert: {
           created_at?: string
-          id?: number
+          group_id: string
+          id?: string
+          user_id: string
         }
         Update: {
           created_at?: string
-          id?: number
+          group_id?: string
+          id?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "group_users_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "group"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "group_users_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

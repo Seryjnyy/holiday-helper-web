@@ -5,6 +5,7 @@ import { supabase } from "../supabase/supabaseClient";
 // https://github.com/linus1703/expo-starter/blob/main/app/stores/AuthStore.ts
 interface AuthState {
   session: Session | null;
+  user: User | null;
   setSession: (session: Session | null) => void;
   login: (email: string, password: string) => Promise<User | AuthError | null>;
   register: (
@@ -16,6 +17,7 @@ interface AuthState {
 
 const useAuthStore = create<AuthState>((set) => ({
   session: null,
+  user: null,
   setSession: (session) => set({ session: session }),
   login: async (email, password) => {
     if (!email) return Promise.reject("Email is required");
@@ -27,7 +29,7 @@ const useAuthStore = create<AuthState>((set) => ({
     });
     if (error) return Promise.reject(error);
 
-    set({ session: data.session });
+    set({ session: data.session, user: data.user });
     return Promise.resolve(data.user);
   },
   register: async (email, password) => {
@@ -40,13 +42,13 @@ const useAuthStore = create<AuthState>((set) => ({
     });
     if (error) return Promise.reject(error);
 
-    set({ session: data.session });
+    set({ session: data.session, user: data.user });
     return Promise.resolve(data.user);
   },
   logout: async () => {
     const { error } = await supabase.auth.signOut();
     if (error) return Promise.reject(error);
-    set({ session: null });
+    set({ session: null, user: null });
     return Promise.resolve();
   },
 }));
