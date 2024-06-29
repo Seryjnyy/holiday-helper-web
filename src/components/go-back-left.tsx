@@ -17,7 +17,7 @@ export default function GoBackLeft({
 
   return (
     <div
-      className="group cursor-pointer flex gap-2 m-2 border w-fit"
+      className="group cursor-pointer flex gap-2 mt-2 border w-fit"
       onClick={onClickLink}
     >
       <ArrowLeft className="group-hover:-translate-x-2 transition-all " />

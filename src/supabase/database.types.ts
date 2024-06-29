@@ -46,18 +46,21 @@ export type Database = {
           created_at: string
           group_id: string
           id: string
+          name: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
           group_id: string
           id?: string
+          name?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
           group_id?: string
           id?: string
+          name?: string | null
           user_id?: string
         }
         Relationships: [
@@ -72,6 +75,35 @@ export type Database = {
             foreignKeyName: "group_users_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profile: {
+        Row: {
+          created_at: string
+          display_name: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
           },

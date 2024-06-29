@@ -1,12 +1,12 @@
 import React from "react";
 import CreateGroup from "./create-group";
-import Groups from "./groups";
+import GroupList from "./group-list";
 
-export default function GroupPage() {
+export default function GroupsPage() {
   return (
     <div>
       <CreateGroup />
-      <Groups />
+      <GroupList />
     </div>
   );
 }

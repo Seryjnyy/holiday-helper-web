@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { getGroupsForUser } from "../../services/group";
-import useAuthStore from "../../stores/auth-store";
-import UserMissingError from "../../user-missing-error";
-import { Group } from "../../types";
-import { Link } from "react-router-dom";
+import { getGroupsForUser } from "@/services/group";
 
-export default function Groups() {
+import UserMissingError from "@/components/user-missing-error";
+
+import { Link } from "react-router-dom";
+import useAuthStore from "@/stores/auth-store";
+import { Group } from "@/types";
+
+export default function GroupList() {
   const [groups, setGroups] = useState<Group[]>([]);
   const user = useAuthStore((state) => state.user);
 
