@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      activity: {
+        Row: {
+          created_at: string
+          creator_id: string
+          extras: Json | null
+          id: string
+          type: Database["public"]["Enums"]["activity_type"]
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          extras?: Json | null
+          id?: string
+          type: Database["public"]["Enums"]["activity_type"]
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          extras?: Json | null
+          id?: string
+          type?: Database["public"]["Enums"]["activity_type"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       group: {
         Row: {
           created_at: string
@@ -117,7 +149,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      activity_type:
+        | "user_join"
+        | "user_leave"
+        | "user_removed"
+        | "user_added"
+        | "charge_created"
+        | "charge_modified"
+        | "charge_deleted"
     }
     CompositeTypes: {
       [_ in never]: never

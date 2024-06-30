@@ -13,6 +13,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProfilePage from "@/routes/groups/(id)/profile/page.tsx";
 import GroupsPage from "@/routes/groups/page.tsx";
 import ChargePage from "@/routes/groups/(id)/charge/page.tsx";
+import { ThemeProvider } from "./components/theme-provider";
+import CreateUserPage from "./routes/groups/(id)/create-user/page";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,11 @@ const router = createBrowserRouter([
         element: <ChargePage />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "groups/:id/create-user",
+        element: <CreateUserPage />,
+        errorElement: <ErrorPage />,
+      },
     ],
     // loader: rootLoader,
   },
@@ -46,7 +53,9 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>

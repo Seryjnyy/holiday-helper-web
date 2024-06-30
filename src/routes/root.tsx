@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 
 import useAuthStore from "@/stores/auth-store";
+import { Button } from "@/components/ui/button";
+import { UserIcon } from "lucide-react";
 
 export default function Root() {
   const navigate = useNavigate();
@@ -22,37 +24,46 @@ export default function Root() {
 
   return (
     <div>
-      <nav className="border px-2 flex justify-between">
+      <nav className="border px-2 py-2 flex justify-between bg-secondary mb-6">
         <div>
-          <button onClick={() => navigate("/")}>/</button>
-          <button onClick={() => navigate("/group")}>group</button>
+          <Button onClick={() => navigate("/")}>/</Button>
+          <Button onClick={() => navigate("/groups")}>groups</Button>
         </div>
-        <div>
-          <span className="text-sm px-2">{auth?.session?.user.email}</span>
+        <div className="flex">
+          {auth.session && (
+            <div className="flex gap-1 bg-muted items-center rounded-md">
+              <span className="text-xs px-2  rounded-lg text-muted-foreground">
+                {auth?.session?.user.email}
+              </span>
+              <Button>
+                <UserIcon />
+              </Button>
+            </div>
+          )}
           {!auth.session ? (
-            <button
+            <Button
               onClick={() => {
                 auth.login("somemail@gmail.com", "someToughPassword123!");
               }}
             >
               login
-            </button>
+            </Button>
           ) : (
-            <button
+            <Button
               onClick={() => {
                 auth.logout();
               }}
             >
               log out
-            </button>
+            </Button>
           )}
-          <button
+          <Button
             onClick={() => {
               auth.register("somemail@gmail.com", "someToughPassword123!");
             }}
           >
             register
-          </button>
+          </Button>
         </div>
       </nav>
       <Outlet />

@@ -1,68 +1,61 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind components;
+  @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @layer base {
+    
+:root  {
+  --background: 167 100% 95%;
+  --foreground: 167 5% 10%;
+  --card: 167 50% 90%;
+  --card-foreground: 167 5% 15%;
+  --popover: 167 100% 95%;
+  --popover-foreground: 167 100% 10%;
+  --primary: 167 6% 79%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 167 30% 74%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: 129 30% 85%;
+  --muted-foreground: 167 5% 40%;
+  --accent: 129 30% 80%;
+  --accent-foreground: 167 5% 15%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 167 5% 90%;
+  --border: 167 30% 74%;
+  --input: 167 30% 50%;
+  --ring: 167 6% 79%;
+  --radius: 1.5rem;
+}
+.dark  {
+  --background: 167 50% 10%;
+  --foreground: 167 5% 90%;
+  --card: 167 50% 10%;
+  --card-foreground: 167 5% 90%;
+  --popover: 167 50% 5%;
+  --popover-foreground: 167 5% 90%;
+  --primary: 167 6% 79%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 167 30% 20%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 129 30% 25%;
+  --muted-foreground: 167 5% 65%;
+  --accent: 129 30% 25%;
+  --accent-foreground: 167 5% 90%;
+  --destructive: 0 100% 50%;
+  --destructive-foreground: 167 5% 90%;
+  --border: 167 30% 50%;
+  --input: 167 30% 50%;
+  --ring: 167 6% 79%;
+  --radius: 1.5rem;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
+
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
   }
-  button {
-    background-color: #f9f9f9;
-  }
-}

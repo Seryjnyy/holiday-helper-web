@@ -4,29 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Loading from "@/components/loading";
-import { CircleUser } from "lucide-react";
+import { CircleUser, User } from "lucide-react";
 import ChargePage from "./charge/page";
-
-const GroupUsers = ({ id }: { id: string }) => {
-  const { isPending, isError, data, error } = useQuery({
-    queryKey: ["groupUsers", id ?? ""],
-    queryFn: () => getGroupUsers(id ?? ""),
-  });
-
-  if (isPending) {
-    return <Loading />;
-  }
-
-  if (isError) return <div>Error {error.message}</div>;
-
-  return (
-    <div>
-      {data.map((groupUser) => (
-        <div key={groupUser.id}>{groupUser.name}</div>
-      ))}
-    </div>
-  );
-};
+import ActivityList from "./activity-list";
+import GroupUserList from "../group-user-list";
+import { H1 } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 
 export default function GroupPage() {
   let { id } = useParams();
@@ -49,19 +32,26 @@ export default function GroupPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center px-4">
-        <GoBackLeft title="groups" to="/groups" />
-        <div className="cursor-pointer" onClick={() => navigate("profile")}>
-          <CircleUser />
+      <div className="flex mb-8 justify-between items-center px-2">
+        <div className="flex items-center gap-2 ">
+          <GoBackLeft title="groups" to="/groups" />
+          <div className="relative">
+            <H1>Name {data?.name}</H1>
+            <span className="text-xs text-muted absolute">{"" + id}</span>
+          </div>
         </div>
+        <Button onClick={() => navigate("profile")} variant={"outline"}>
+          <User />
+        </Button>
       </div>
-      <h1>some group name</h1>
-      <div className="flex gap-8">
-        <span>{"" + id}</span>
-        <span>{data?.name}</span>
+
+      <div className="flex flex-col gap-2 px-2">
+        <GroupUserList id={id} />
+        <ActivityList groupID={id} />
+        <Button className="w-fit" onClick={() => navigate("charge")}>
+          Create charge
+        </Button>
       </div>
-      <GroupUsers id={id} />
-      <button onClick={() => navigate("charge")}>Create charge</button>
     </div>
   );
 }

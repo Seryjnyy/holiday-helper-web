@@ -1,21 +1,19 @@
 import { supabase } from "@/supabase/supabaseClient";
 
 export const getGroupsForUser = async (userID: string) => {
-  console.log("🚀 ~ getGroupsForUser ~ userID:", userID);
   const { error, data } = await supabase
     .from("group_user")
     .select("group(*)")
     .eq("user_id", userID);
 
   if (error) {
-    return { error: error.message, data: null };
+    return Promise.reject(new Error(error.message));
   }
   if (!data) {
-    return { error: null, data: null };
+    return Promise.reject(new Error("Data is missing"));
   }
 
-  // return {error:null, data:data.filter(group => group.group != null)};
-  return { error: null, data: data };
+  return data;
 };
 
 // export const getGroupsForUsesr = async (userID: string) => {
@@ -71,6 +69,22 @@ export async function getGroupUser(groupID: string, userID: string) {
     .eq("user_id", userID)
     .limit(1)
     .single();
+
+  if (error) {
+    return Promise.reject(new Error(error.message));
+  }
+  if (!data) {
+    return Promise.reject(new Error("Data is missing"));
+  }
+
+  return data;
+}
+
+export async function getGroupActivity(groupID: string) {
+  const { error, data } = await supabase
+    .from("activity")
+    .select()
+    .eq("group_id", groupID);
 
   if (error) {
     return Promise.reject(new Error(error.message));

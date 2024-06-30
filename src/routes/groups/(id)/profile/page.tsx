@@ -6,6 +6,7 @@ import { getGroupUser } from "@/services/group";
 import Loading from "@/components/loading";
 import ErrorMessage from "@/components/error-message";
 import GoBackLeft from "@/components/go-back-left";
+import { H1 } from "@/components/ui/typography";
 
 export default function ProfilePage() {
   let { id } = useParams();
@@ -30,7 +31,10 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <GoBackLeft to={`/groups/${id}`} title="group" />
+      <div className="flex mb-8 gap-2 items-center px-2">
+        <GoBackLeft to={`/groups/${id}`} title="group" />
+        <H1>Profile</H1>
+      </div>
       <p>{data.name}</p>
       <div>
         <h3>Reason to be on this holiday?</h3>
