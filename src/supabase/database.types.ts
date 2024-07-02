@@ -12,31 +12,41 @@ export type Database = {
       activity: {
         Row: {
           created_at: string
-          creator_id: string
+          creator_group_id: string
           extras: Json | null
+          group_id: string
           id: string
           type: Database["public"]["Enums"]["activity_type"]
         }
         Insert: {
           created_at?: string
-          creator_id: string
+          creator_group_id: string
           extras?: Json | null
+          group_id: string
           id?: string
           type: Database["public"]["Enums"]["activity_type"]
         }
         Update: {
           created_at?: string
-          creator_id?: string
+          creator_group_id?: string
           extras?: Json | null
+          group_id?: string
           id?: string
           type?: Database["public"]["Enums"]["activity_type"]
         }
         Relationships: [
           {
-            foreignKeyName: "activity_creator_id_fkey"
-            columns: ["creator_id"]
+            foreignKeyName: "activity_creator_group_id_fkey"
+            columns: ["creator_group_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_group_id_fkey"
+            columns: ["group_id"]
+            isOneToOne: false
+            referencedRelation: "group"
             referencedColumns: ["id"]
           },
         ]
@@ -79,21 +89,27 @@ export type Database = {
           group_id: string
           id: string
           name: string | null
-          user_id: string
+          role: Database["public"]["Enums"]["group_user_role"]
+          user_created: boolean | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           group_id: string
           id?: string
           name?: string | null
-          user_id: string
+          role: Database["public"]["Enums"]["group_user_role"]
+          user_created?: boolean | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           group_id?: string
           id?: string
           name?: string | null
-          user_id?: string
+          role?: Database["public"]["Enums"]["group_user_role"]
+          user_created?: boolean | null
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -117,24 +133,24 @@ export type Database = {
           created_at: string
           display_name: string
           id: string
-          user_id: string
+          user_group_id: string
         }
         Insert: {
           created_at?: string
           display_name: string
           id?: string
-          user_id: string
+          user_group_id: string
         }
         Update: {
           created_at?: string
           display_name?: string
           id?: string
-          user_id?: string
+          user_group_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "profile_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "profile_user_group_id_fkey"
+            columns: ["user_group_id"]
             isOneToOne: true
             referencedRelation: "users"
             referencedColumns: ["id"]
@@ -157,6 +173,7 @@ export type Database = {
         | "charge_created"
         | "charge_modified"
         | "charge_deleted"
+      group_user_role: "creator" | "admin" | "user" | "bot"
     }
     CompositeTypes: {
       [_ in never]: never

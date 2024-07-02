@@ -21,26 +21,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
+import { addGroupUser } from "@/services/group";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   role: z.enum(["bot"]),
+  profileImage: z.string().max(300),
 });
 
 // TODO : Avatar thingy is not working rn
-export default function CreateUser() {
+export default function CreateUser({ groupID }: { groupID: string }) {
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       role: "bot",
+      profileImage: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    const { error } = await addGroupUser(
+      groupID,
+      values.username,
+      "",
+      values.role
+    );
+
+    if (error) {
+      toast({
+        title: "Failed to create new user.",
+        description: error,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "New user created.",
+        description: (
+          <>
+            <span>{`${values.role.toUpperCase()} `}</span>
+            <span className="font-bold">{`${values.username} `}</span>
+            has been added to the group.`
+          </>
+        ),
+      });
+
+      navigate(`/groups/${groupID}`);
+    }
   }
   return (
     <div className="border rounded-md p-4">

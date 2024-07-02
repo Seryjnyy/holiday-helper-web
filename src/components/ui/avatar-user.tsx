@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { GroupRole } from "@/types";
 import { BotIcon, CrownIcon, UserIcon } from "lucide-react";
 import React from "react";
 
@@ -9,14 +10,16 @@ export default function AvatarUser({
   isUs,
 }: {
   name: string;
-  role: "admin" | "user" | "bot";
+  role: GroupRole;
   isUs: boolean;
 }) {
   return (
     <Avatar className="relative overflow-visible">
       <AvatarImage src="https://github.com/fsdshadcn.png" />
       <AvatarFallback>CN</AvatarFallback>
-      <UserIcon className="absolute -bottom-[0.15rem] -right-[0.15rem] bg-secondary rounded-lg z-20 w-4 h-4" />
+      {isUs && (
+        <UserIcon className="absolute -bottom-[0.15rem] -right-[0.15rem] bg-secondary rounded-lg z-20 w-4 h-4" />
+      )}
       {role == "admin" && (
         <CrownIcon className="absolute -bottom-[0.15rem] -left-[0.15rem] bg-secondary rounded-lg z-20 w-4 h-4" />
       )}

@@ -6,6 +6,7 @@ import {
   useLoaderData,
   useNavigate,
 } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
 
 import useAuthStore from "@/stores/auth-store";
 import { Button } from "@/components/ui/button";
@@ -67,6 +68,7 @@ export default function Root() {
         </div>
       </nav>
       <Outlet />
+      <Toaster />
     </div>
   );
 }

@@ -19,7 +19,7 @@ export default function CreateUserPage() {
         <H1>Create user</H1>
       </div>
       <div className="px-2">
-        <CreateUser />
+        <CreateUser groupID={id} />
       </div>
     </div>
   );

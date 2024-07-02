@@ -1,4 +1,5 @@
 import { supabase } from "@/supabase/supabaseClient";
+import { GroupRole } from "@/types";
 
 export const getGroupsForUser = async (userID: string) => {
   const { error, data } = await supabase
@@ -94,4 +95,25 @@ export async function getGroupActivity(groupID: string) {
   }
 
   return data;
+}
+
+// TODO : Currently not inserting profile image
+export async function addGroupUser(
+  groupID: string,
+  username: string,
+  profileImage: string,
+  role: GroupRole
+) {
+  const { error } = await supabase.from("group_user").insert({
+    group_id: groupID,
+    role: role,
+    name: username,
+    user_created: true,
+  });
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  return { error: null };
 }

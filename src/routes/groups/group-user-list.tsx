@@ -37,13 +37,17 @@ export default function GroupUserList({ id }: { id: string }) {
           <H3>Group user list</H3>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-0">
         {data.map((groupUser) => {
           const isUs = user != null && user?.id == groupUser.user_id;
 
           return (
             <div className="flex items-center gap-2 bg-secondary p-4 rounded-sm">
-              <AvatarUser name="" isUs={isUs} role="user" />
+              <AvatarUser
+                name={groupUser.name ?? ""}
+                isUs={isUs}
+                role={groupUser.role}
+              />
               <div className="relative">
                 <H4 className="min-w-[14rem]">{groupUser.name}</H4>
                 <span className="absolute text-xs text-muted-foreground">
