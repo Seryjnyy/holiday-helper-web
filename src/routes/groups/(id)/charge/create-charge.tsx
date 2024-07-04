@@ -1,3 +1,5 @@
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+
 import GoBackLeft from "@/components/go-back-left";
 import Loading from "@/components/loading";
 import { Button } from "@/components/ui/button";
@@ -24,6 +26,10 @@ import { cn } from "@/lib/utils";
 export default function CreateCharge({ groupID }: { groupID: string }) {
   const [price, setPrice] = useState(0);
   const [selectedUsers, setSelectedUsers] = useState<GroupUser[]>([]);
+  const [splitType, setSplitType] = useState<"equal" | "custom">("equal");
+  const [userSplit, setUserSplit] = useState<{ id: string; amount: number }[]>(
+    []
+  );
 
   const user = useAuthStore((state) => state.user);
   const { isPending, isError, data, error } = useQuery({
@@ -39,6 +45,16 @@ export default function CreateCharge({ groupID }: { groupID: string }) {
 
   if (isError) return <div>Error {error.message}</div>;
 
+  const onToggleUser = (groupUser: GroupUser) => {
+    const isSelected = selectedUsers.find((x) => x.id == groupUser.id) != null;
+
+    if (!isSelected) {
+      setSelectedUsers((prev) => [...prev, groupUser]);
+    } else {
+      setSelectedUsers((prev) => prev.filter((x) => x.id != groupUser.id));
+    }
+  };
+
   return (
     <div className="px-4 space-y-12">
       <div className="p-4 rounded-md bg-secondary flex flex-col items-center">
@@ -49,7 +65,12 @@ export default function CreateCharge({ groupID }: { groupID: string }) {
           <div className="bg-background  py-2 rounded-lg flex items-center min-w-[8rem] justify-center">
             {price}
           </div>
+          <div className=" bg-background py-2 px-4 rounded-md ">2 people</div>
         </div>
+        <div></div>
+      </div>
+
+      <div className="">
         <NumberFormatInput
           prefix="$"
           allowNegative={false}
@@ -58,23 +79,48 @@ export default function CreateCharge({ groupID }: { groupID: string }) {
         />
       </div>
 
+      <div className="flex justify-center ">
+        <div className="w-fit bg-secondary p-3 flex items-center rounded-sm gap-2">
+          <span className="font-bold">split</span>
+          <div className="flex">
+            <ToggleGroup
+              type="single"
+              value={splitType}
+              onValueChange={(val) => {
+                if (val != "equal" && val != "custom") return;
+
+                setSplitType(val);
+              }}
+            >
+              <ToggleGroupItem value="equal" aria-label="Toggle equal">
+                equal
+              </ToggleGroupItem>
+              <ToggleGroupItem value="custom" aria-label="Toggle custom">
+                custom
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        </div>
+      </div>
+
       <div>
         {data.map((groupUser) => {
           const isUs = user != null && user?.id == groupUser.user_id;
           const isSelected =
             selectedUsers.find((x) => x.id == groupUser.id) != null;
 
+          const split =
+            selectedUsers.length == 0 ? 0 : price / selectedUsers.length;
+
           return (
             <div
               className={cn(
-                "flex items-center bg-secondary-foreground gap-2 p-4 rounded-sm ",
-                { "cursor-pointer  bg-secondary": !isSelected }
-              )}
-              onClick={() => {
-                if (!isSelected) {
-                  setSelectedUsers((prev) => [...prev, groupUser]);
+                "flex items-center bg-secondary  gap-2 p-4 rounded-sm cursor-pointer",
+                {
+                  "border-2": isSelected,
                 }
-              }}
+              )}
+              onClick={onToggleUser}
             >
               {isSelected ? "true" : "false"}
               <AvatarUser
@@ -88,6 +134,7 @@ export default function CreateCharge({ groupID }: { groupID: string }) {
                   {groupUser.id}
                 </span>
               </div>
+              {isSelected && split}
             </div>
           );
         })}
