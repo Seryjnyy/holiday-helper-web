@@ -174,6 +174,7 @@ export type Database = {
         | "charge_modified"
         | "charge_deleted"
       group_user_role: "creator" | "admin" | "user" | "bot"
+      split_type: "equal" | "custom"
     }
     CompositeTypes: {
       [_ in never]: never
