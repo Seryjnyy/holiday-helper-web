@@ -1,15 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { GroupRole } from "@/types";
 import { BotIcon, CrownIcon, UserIcon } from "lucide-react";
-import React from "react";
 
 // TODO : Hook up name as fallback and the actual avatar image
 export default function AvatarUser({
-  name,
   role,
   isUs,
 }: {
-  name: string;
+  // name: string;
   role: GroupRole;
   isUs: boolean;
 }) {

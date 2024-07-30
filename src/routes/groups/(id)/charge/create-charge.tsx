@@ -1,12 +1,9 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-import GoBackLeft from "@/components/go-back-left";
 import Loading from "@/components/loading";
+import AvatarUser from "@/components/ui/avatar-user";
 import { Button } from "@/components/ui/button";
-import { getGroupUsers } from "@/services/group";
-import useAuthStore from "@/stores/auth-store";
-import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import { NumberFormatInput } from "@/components/ui/number-format-input";
 import {
   Select,
   SelectContent,
@@ -14,14 +11,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusIcon } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import AvatarUser from "@/components/ui/avatar-user";
-import { H4, P } from "@/components/ui/typography";
-import { Input } from "@/components/ui/input";
-import { NumberFormatInput } from "@/components/ui/number-format-input";
-import { GroupUser } from "@/types";
+import { H4 } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
+import { getGroupUsers } from "@/services/group";
+import useAuthStore from "@/stores/auth-store";
+import { GroupUser } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function CreateCharge({ groupID }: { groupID: string }) {
   const [price, setPrice] = useState(0);

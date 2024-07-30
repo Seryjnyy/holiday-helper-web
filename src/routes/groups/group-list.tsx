@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
 import { getGroupsForUser } from "@/services/group";
 
 import UserMissingError from "@/components/user-missing-error";
 
-import { Link } from "react-router-dom";
-import useAuthStore from "@/stores/auth-store";
-import { Group } from "@/types";
-import { H2, H3 } from "@/components/ui/typography";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/loading";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { H2, H3 } from "@/components/ui/typography";
 import { cn, toDateString, toTimeString } from "@/lib/utils";
+import useAuthStore from "@/stores/auth-store";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function GroupList() {
   const user = useAuthStore((state) => state.user);

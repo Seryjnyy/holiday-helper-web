@@ -1,11 +1,6 @@
-import React from "react";
-import { InputProps } from "./input";
-import {
-  NumberFormatBaseProps,
-  NumericFormat,
-  NumericFormatProps,
-} from "react-number-format";
 import { cn } from "@/lib/utils";
+import { NumericFormat, NumericFormatProps } from "react-number-format";
+import { InputProps } from "./input";
 
 export interface NumberFormatInputProps extends NumericFormatProps<InputProps> {
   className?: string;

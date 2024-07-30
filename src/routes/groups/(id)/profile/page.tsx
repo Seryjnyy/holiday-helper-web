@@ -9,7 +9,7 @@ import GoBackLeft from "@/components/go-back-left";
 import { H1 } from "@/components/ui/typography";
 
 export default function ProfilePage() {
-  let { id } = useParams();
+  const { id } = useParams();
   const user = useAuthStore((state) => state.user);
 
   const { isPending, isError, data, error } = useQuery({

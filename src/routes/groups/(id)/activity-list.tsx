@@ -1,14 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import Loading from "@/components/loading";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { H3, H4 } from "@/components/ui/typography";
 import { toDateString, toTimeString } from "@/lib/utils";
 import { getGroupActivity, getGroupUsers } from "@/services/group";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { EyeOpenIcon } from "@radix-ui/react-icons";
-import { Button } from "@/components/ui/button";
 import { Eye } from "lucide-react";
 
 // TODO : Types copied from db types, but if db is updated this wont get changed automatically

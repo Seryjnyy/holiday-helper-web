@@ -2,7 +2,8 @@ import { getGroupUsers } from "@/services/group";
 import { useQuery } from "@tanstack/react-query";
 
 import Loading from "@/components/loading";
-import useAuthStore from "@/stores/auth-store";
+import AvatarUser from "@/components/ui/avatar-user";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,11 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { H3, H4 } from "@/components/ui/typography";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import AvatarUser from "@/components/ui/avatar-user";
-import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import useAuthStore from "@/stores/auth-store";
+import { Link } from "react-router-dom";
 
 export default function GroupUserList({ id }: { id: string }) {
   const user = useAuthStore((state) => state.user);
